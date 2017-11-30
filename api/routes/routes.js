@@ -1,10 +1,9 @@
-const controllerMethods = require('../controllers/postController');
+const control = require('../controllers/postController');
 
 module.exports = app => {
-  app.route('/');
-
-  app.route('/create-user');
-  app.route('/posts');
-  app.route('/posts/:id');
-  app.route('/new-post');
+  app.route('/new-user').post(control.createUser);
+  app.route('/new-posts').post(control.createPost);
+  app.route('/login').post(control.authUser);
+  app.route('/posts/:id').get(control.findPost);
+  app.route('/posts').get(control.findPosts);
 };
