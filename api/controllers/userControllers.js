@@ -4,20 +4,7 @@ const User = require('../models/userModels');
 
 const STATUS_USER_ERROR = 422;
 
-const createUser = (req, res) => {
-  const { username, password } = req.body;
-  const newUser = new User({ username, password });
-  newUser
-    .save()
-    .then(createdUser => {
-      res.status(200).json(createdUser);
-    })
-    .catch(err => {
-      res.status(STATUS_USER_ERROR).json({ errorMessage: err.message });
-      return;
-    });
-};
-
+// app.route('/login').post(control.authUser);
 const loginUser = (req, res) => {
   const { username, password } = req.body;
   User.findOne({ username, password })
@@ -25,6 +12,21 @@ const loginUser = (req, res) => {
     .exec()
     .then(user => {
       res.json(user);
+    })
+    .catch(err => {
+      res.status(STATUS_USER_ERROR).json({ errorMessage: err.message });
+      return;
+    });
+};
+
+// app.route('/new-user').post(control.createUser);
+const createUser = (req, res) => {
+  const { username, password } = req.body;
+  const newUser = new User({ username, password });
+  newUser
+    .save()
+    .then(createdUser => {
+      res.status(200).json(createdUser);
     })
     .catch(err => {
       res.status(STATUS_USER_ERROR).json({ errorMessage: err.message });
